@@ -12,6 +12,7 @@ class Utils {
         })
         .catch(function(error) {
           let errorMessage = { status: "error", error: error };
+          reject(errorMessage);
         });
     });
   };
@@ -31,6 +32,7 @@ class Utils {
         })
         .catch(function(error) {
           let errorMessage = { status: "error", error: error };
+          reject(errorMessage);
         });
     });
   };
@@ -39,15 +41,22 @@ class Utils {
     return new Promise((resolve, reject) => {
       let currentDate = new Date().toISOString();
       let today = currentDate.substr(0, 10);
-      let hour = currentDate.substr(11, 2);
       let currentTemperature;
       let todaysData = [];
       weatherData.timeSeries.forEach(timelyData => {
-        if (timelyData.validTime.substr(0, 10) == today) {
+        if (timelyData.validTime.substr(0, 10) === today) {
           todaysData.push(timelyData);
         }
       });
-      console.log(todaysData);
+
+      // Gotta test later
+      // let hour = currentDate.substr(11, 2);
+      // todaysData.forEach(dailyData => {
+      //   if (hour === dailyData.validTime.substr(11, 2)) {
+      //     currentTemperature = dailyData.parameters[1].values[0];
+      //     resolve(currentTemperature);
+      //   }
+      // });
       currentTemperature = todaysData[0].parameters[1].values[0];
       resolve(currentTemperature);
     });
@@ -55,10 +64,6 @@ class Utils {
 
   static getWeeklyData = weatherData => {
     return new Promise((resolve, reject) => {
-      let currentDate = new Date().toISOString();
-      let today = currentDate.substr(0, 10);
-      let hour = currentDate.substr(11, 2);
-      let currentTemperature;
       let weeklyData = [];
       let weeklyInformation = [];
       weatherData.timeSeries.forEach(timelyData => {

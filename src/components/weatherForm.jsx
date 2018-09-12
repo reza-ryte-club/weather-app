@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./weather.css";
+import "../stylesheets/weather.css";
 import Utils from "../lib/utils";
 import axios from "axios";
 import CityList from "./cityList";
@@ -24,11 +24,6 @@ class WeatherForm extends Component {
           <div className="row" id="appSummary">
             <div className="col">
               <h1 className="col text-center app-header">Weather App</h1>
-              {/* <small>
-                You are running this application in{" "}
-                <b>{process.env.NODE_ENV}</b> mode.
-              </small> */}
-
               <p className="lead app-subtitle">Get latest weather condition</p>
               <label htmlFor="states-autocomplete">Choose a Swedish city</label>
               <input
@@ -39,9 +34,6 @@ class WeatherForm extends Component {
                 type="text"
                 placeholder="Any Swedish city"
               />
-              <br />
-
-              {/* <button onClick={this.showCities}>hola</button> */}
 
               {this.state.cities.map((city, i) => (
                 <div
@@ -87,6 +79,7 @@ class WeatherForm extends Component {
       this.checkWeather(currentState.state.cities[cursor].name);
     }
   };
+
   checkWeather = city => {
     this.setState({ value: "" });
     this.setState({ selectedCity: city });
@@ -140,9 +133,6 @@ class WeatherForm extends Component {
       let currentCity = this.state.value;
       let result = [];
       let currentState = this;
-      console.log("API change");
-
-      console.log(process.env);
       axios
         .get(
           "/maps/api/place/autocomplete/json?input=" +

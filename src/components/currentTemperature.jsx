@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./weather.css";
+import "../stylesheets/weather.css";
 
 class currentTemperature extends Component {
   state = {
