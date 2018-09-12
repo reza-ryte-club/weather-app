@@ -1,5 +1,8 @@
 import axios from "axios";
 class Utils {
+  static sum(a, b) {
+    return a + b;
+  }
   static getGeoCode = cityName => {
     return new Promise((resolve, reject) => {
       axios
@@ -57,8 +60,12 @@ class Utils {
       //     resolve(currentTemperature);
       //   }
       // });
-      currentTemperature = todaysData[0].parameters[1].values[0];
-      resolve(currentTemperature);
+      todaysData[0].parameters.forEach(parameter => {
+        if (parameter.name == "t") {
+          currentTemperature = parameter.values[0];
+          resolve(currentTemperature);
+        }
+      });
     });
   };
 
@@ -66,29 +73,42 @@ class Utils {
     return new Promise((resolve, reject) => {
       let weeklyData = [];
       let weeklyInformation = [];
+
+      console.log(weatherData);
       weatherData.timeSeries.forEach(timelyData => {
         if (!!weeklyData[timelyData.validTime.substr(0, 10)]) {
-          if (
-            weeklyData[timelyData.validTime.substr(0, 10)].high <
-            timelyData.parameters[1].values[0]
-          ) {
-            weeklyData[timelyData.validTime.substr(0, 10)].high =
-              timelyData.parameters[1].values[0];
-          }
-          if (
-            weeklyData[timelyData.validTime.substr(0, 10)].low >
-            timelyData.parameters[1].values[0]
-          ) {
-            weeklyData[timelyData.validTime.substr(0, 10)].low =
-              timelyData.parameters[1].values[0];
-          }
+          timelyData.parameters.forEach(parameter => {
+            if (parameter.name === "t") {
+              //     weeklyData[timelyData.validTime.substr(0, 10)] = { high: parameter.values[0], low: parameter.values[0] };
+              if (
+                weeklyData[timelyData.validTime.substr(0, 10)].high <
+                parameter.values[0]
+              ) {
+                weeklyData[timelyData.validTime.substr(0, 10)].high =
+                  parameter.values[0];
+              }
+              if (
+                weeklyData[timelyData.validTime.substr(0, 10)].low >
+                parameter.values[0]
+              ) {
+                weeklyData[timelyData.validTime.substr(0, 10)].low =
+                  parameter.values[0];
+              }
+            }
+          });
         } else {
-          weeklyData[timelyData.validTime.substr(0, 10)] = {
-            high: timelyData.parameters[1].values[0],
-            low: timelyData.parameters[1].values[0]
-          };
+          timelyData.parameters.forEach(parameter => {
+            if (parameter.name === "t") {
+              weeklyData[timelyData.validTime.substr(0, 10)] = {
+                high: parameter.values[0],
+                low: parameter.values[0]
+              };
+            }
+          });
         }
       });
+      console.log("weeklyData");
+      console.log(weeklyData);
       let dates = Object.keys(weeklyData);
 
       dates.forEach(date => {

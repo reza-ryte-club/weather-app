@@ -84,7 +84,6 @@ class WeatherForm extends Component {
     this.setState({ value: "" });
     this.setState({ selectedCity: city });
     this.setState({ cities: [] });
-
     this.showWeather(city);
   };
 
@@ -121,11 +120,6 @@ class WeatherForm extends Component {
       currentState.setState({ currentTemperature: currentTemperature });
       currentState.getWeeklyForecast(weatherData);
     });
-  };
-
-  showCities = () => {
-    console.log("this.state.cities");
-    console.log(this.state.cities);
   };
 
   handleChange = e => {

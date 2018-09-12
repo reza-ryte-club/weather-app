@@ -4,9 +4,6 @@ import "../stylesheets/weather.css";
 class WeeklyForecast extends Component {
   state = {};
 
-  showProps() {
-    console.log("prop is here");
-  }
   render() {
     return (
       <div className="weekly-forecast">
