@@ -1,0 +1,105 @@
+body {
+  color: #333;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 200;
+}
+
+.example {
+  padding: 0 25px;
+}
+
+label {
+  display: block;
+  margin: 5px 0;
+}
+
+code {
+  padding: 0.2em 0.5em;
+  font-size: 85%;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 3px;
+}
+
+.menu {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #cccccc;
+}
+
+.item {
+  padding: 2px 6px;
+  cursor: default;
+}
+
+.item-highlighted {
+  color: white;
+  background-color: #4095bf;
+}
+
+.item-header {
+  background-color: #eeeeee;
+  color: #454545;
+  font-weight: bold;
+}
+
+.search-box {
+  width: 200px;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 4px;
+  border-style: solid;
+  outline: none;
+  text-transform: capitalize;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  text-align: center;
+}
+
+.active {
+  background: #4095bf;
+  width: 197px;
+  margin-left: -12px;
+  padding-left: 7px;
+  cursor: pointer;
+}
+
+.inactive {
+  background: #ffffff;
+  width: 197px;
+  margin-left: -12px;
+  padding-left: 7px;
+  cursor: pointer;
+}
+
+.inactive:hover {
+  background: lightgray;
+}
+
+.weather-title {
+  font-size: 60px;
+}
+
+.weather-city {
+}
+
+.current-temperature {
+  margin-top: 40px;
+}
+
+.weekly-forecast {
+  margin-top: 20px;
+}
+
+.app-header {
+  margin-top: 20px;
+}
+
+.app-subtitle {
+  margin-top: 50px;
+}

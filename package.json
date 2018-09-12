@@ -1,0 +1,34 @@
+{
+  "name": "weather-app",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": {
+    "/maps/*": {
+      "target": "https://maps.googleapis.com/",
+      "changeOrigin": true
+    },
+    "/api/*": {
+      "target": "https://opendata-download-metfcst.smhi.se/",
+      "changeOrigin": true
+    }
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
+    "dom-scroll-into-view": "^1.2.1",
+    "jquery": "^3.3.1",
+    "popper": "^1.0.1",
+    "react": "^16.5.0",
+    "react-async-autocomplete": "1.1.0",
+    "react-autocomplete": "^1.8.1",
+    "react-autosuggest": "^9.4.1",
+    "react-dom": "^16.5.0",
+    "react-scripts": "1.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
