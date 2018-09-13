@@ -8,7 +8,7 @@ import WeeklyForecast from "./weeklyForecast";
 
 class WeatherForm extends Component {
   state = {
-    value: "",
+    city: "",
     cities: [],
     currentGeocode: null,
     currentTemperature: null,
@@ -27,7 +27,7 @@ class WeatherForm extends Component {
               <p className="lead app-subtitle">Get latest weather condition</p>
               <label htmlFor="states-autocomplete">Choose a Swedish city</label>
               <input
-                value={this.state.value}
+                value={this.state.city}
                 onChange={this.handleChange}
                 onKeyDown={this.navigateMenu}
                 className="search-box"
@@ -81,7 +81,7 @@ class WeatherForm extends Component {
   };
 
   checkWeather = city => {
-    this.setState({ value: "" });
+    this.setState({ city: "" });
     this.setState({ selectedCity: city });
     this.setState({ cities: [] });
     this.showWeather(city);
@@ -123,8 +123,8 @@ class WeatherForm extends Component {
   };
 
   handleChange = e => {
-    this.setState({ value: e.target.value }, () => {
-      let currentCity = this.state.value;
+    this.setState({ city: e.target.value }, () => {
+      let currentCity = this.state.city;
       let result = [];
       let currentState = this;
       axios

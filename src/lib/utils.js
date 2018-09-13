@@ -1,8 +1,6 @@
 import axios from "axios";
 class Utils {
-  static sum(a, b) {
-    return a + b;
-  }
+  // Get longitude and latitude of a city
   static getGeoCode = cityName => {
     return new Promise((resolve, reject) => {
       axios
@@ -20,6 +18,7 @@ class Utils {
     });
   };
 
+  // Get weather forecast from SMHI database
   static getWeatherData = coordinate => {
     return new Promise((resolve, reject) => {
       axios
@@ -40,6 +39,7 @@ class Utils {
     });
   };
 
+  // Retrieve the current temperature
   static getCurrentTemperature = weatherData => {
     return new Promise((resolve, reject) => {
       let currentDate = new Date().toISOString();
@@ -74,15 +74,19 @@ class Utils {
     });
   };
 
+  // Get weekly forecast
   static getWeeklyData = weatherData => {
     return new Promise((resolve, reject) => {
       let weeklyData = [];
       let weeklyInformation = [];
 
       weatherData.timeSeries.forEach(timelyData => {
+        // If temperature for that day already exists
         if (!!weeklyData[timelyData.validTime.substr(0, 10)]) {
           timelyData.parameters.forEach(parameter => {
+            // check for temperature parameter
             if (parameter.name === "t") {
+              // Update highest and lowest temperature
               if (
                 weeklyData[timelyData.validTime.substr(0, 10)].high <
                 parameter.values[0]
@@ -100,6 +104,7 @@ class Utils {
             }
           });
         } else {
+          // In case there was no prior data for that day
           timelyData.parameters.forEach(parameter => {
             if (parameter.name === "t") {
               weeklyData[timelyData.validTime.substr(0, 10)] = {
@@ -111,7 +116,10 @@ class Utils {
         }
       });
 
+      // Get the keys of weeklyData hash.
       let dates = Object.keys(weeklyData);
+
+      // Traverse the hash and update weeklyInformation array.
       dates.forEach(date => {
         weeklyInformation.push({
           date: date,
