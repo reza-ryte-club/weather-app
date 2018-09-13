@@ -10,16 +10,16 @@ class Utils {
             "&key=" +
             process.env.REACT_APP_GOOGLE_API_KEY
         )
-        .then(function(response) {
-          // debugger;
+        .then(response => {
+          //debugger;
 
           resolve(response.data.results[0].geometry.location);
         })
-        .catch(function(error) {
+        .catch(err => {
           let errorMessage = {
             status: "check internet connection",
-            error: "Query limit exceeded",
-            error: error
+            errorMessage: "Query limit exceeded",
+            error: err
           };
           reject(errorMessage);
         });
@@ -37,10 +37,10 @@ class Utils {
             coordinate.lat +
             "/data.json"
         )
-        .then(function(response) {
+        .then(response => {
           resolve(response.data);
         })
-        .catch(function(error) {
+        .catch(error => {
           let errorMessage = { status: "error", error: error };
           reject(errorMessage);
         });
