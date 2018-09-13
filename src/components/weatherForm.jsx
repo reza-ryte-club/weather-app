@@ -28,7 +28,7 @@ class WeatherForm extends Component {
               <label htmlFor="states-autocomplete">Choose a Swedish city</label>
               <input
                 value={this.state.city}
-                onChange={this.handleChange}
+                onChange={this.inputChange}
                 onKeyDown={this.navigateMenu}
                 className="search-box"
                 type="text"
@@ -64,17 +64,22 @@ class WeatherForm extends Component {
 
   navigateMenu = e => {
     const { cursor, cities } = this.state;
-
     let currentState = this;
+
+    // If user presses the arrow key
+
     if (e.keyCode === 38 && cursor > 0) {
       this.setState(prevState => ({
         cursor: prevState.cursor - 1
       }));
-    } else if (e.keyCode === 40 && cursor < cities.length - 1) {
+    }
+
+    if (e.keyCode === 40 && cursor < cities.length - 1) {
       this.setState(prevState => ({
         cursor: prevState.cursor + 1
       }));
     }
+    // In case of pressing return or enter
     if (e.keyCode === 13 && !!currentState.state.cities[cursor]) {
       this.checkWeather(currentState.state.cities[cursor].name);
     }
@@ -84,16 +89,20 @@ class WeatherForm extends Component {
     this.setState({ city: "" });
     this.setState({ selectedCity: city });
     this.setState({ cities: [] });
-    this.showWeather(city);
-  };
-
-  showWeather = city => {
     let currentState = this;
     Utils.getGeoCode(city).then(function(geocode) {
       geocode.lat = geocode.lat.toPrecision(4);
       geocode.lng = geocode.lng.toPrecision(4);
       currentState.setState({ currentGeocode: geocode }, () => {
-        currentState.getWeather();
+        Utils.getWeatherData(currentState.state.currentGeocode)
+          .then(function(weatherData) {
+            currentState.getCurrentWeather(weatherData);
+          })
+          .catch(e => {
+            alert(
+              "Please check your internet connection and proxy settings in Package.json file."
+            );
+          });
       });
     });
   };
@@ -105,15 +114,6 @@ class WeatherForm extends Component {
     });
   };
 
-  getWeather = () => {
-    let currentState = this;
-    Utils.getWeatherData(currentState.state.currentGeocode).then(function(
-      weatherData
-    ) {
-      currentState.getCurrentWeather(weatherData);
-    });
-  };
-
   getCurrentWeather = weatherData => {
     let currentState = this;
     Utils.getCurrentTemperature(weatherData).then(function(currentTemperature) {
@@ -122,7 +122,7 @@ class WeatherForm extends Component {
     });
   };
 
-  handleChange = e => {
+  inputChange = e => {
     this.setState({ city: e.target.value }, () => {
       let currentCity = this.state.city;
       let result = [];
@@ -148,7 +148,9 @@ class WeatherForm extends Component {
           currentState.updateCities(result);
         })
         .catch(function(error) {
-          // console.log(error);
+          alert(
+            "Please check your internet connection and proxy settings in Package.json file."
+          );
         });
     });
   };
