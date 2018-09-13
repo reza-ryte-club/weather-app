@@ -62,7 +62,7 @@ li {
 }
 
 .active {
-  background: #4095bf;
+  background: lightgray;
   width: 197px;
   margin-left: -12px;
   padding-left: 7px;

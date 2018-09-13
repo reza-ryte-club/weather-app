@@ -6,13 +6,21 @@ class Utils {
       axios
         .get(
           "https://maps.googleapis.com/maps/api/geocode/json?&address=" +
-            cityName
+            cityName +
+            "&key=" +
+            process.env.REACT_APP_GOOGLE_API_KEY
         )
         .then(function(response) {
+          // debugger;
+
           resolve(response.data.results[0].geometry.location);
         })
         .catch(function(error) {
-          let errorMessage = { status: "error", error: error };
+          let errorMessage = {
+            status: "check internet connection",
+            error: "Query limit exceeded",
+            error: error
+          };
           reject(errorMessage);
         });
     });
@@ -66,7 +74,7 @@ class Utils {
       }
 
       todaysData[0].parameters.forEach(parameter => {
-        if (parameter.name == "t") {
+        if (parameter.name === "t") {
           currentTemperature = parameter.values[0];
           resolve(currentTemperature);
         }
