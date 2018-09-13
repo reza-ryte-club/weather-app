@@ -52,14 +52,19 @@ class Utils {
         }
       });
 
-      // Gotta test later
-      // let hour = currentDate.substr(11, 2);
-      // todaysData.forEach(dailyData => {
-      //   if (hour === dailyData.validTime.substr(11, 2)) {
-      //     currentTemperature = dailyData.parameters[1].values[0];
-      //     resolve(currentTemperature);
-      //   }
-      // });
+      // In case there is no data available fot today,
+      // Work on tomorrow's data which is the closest available one
+      if (todaysData.length === 0) {
+        today = new Date();
+        today.setDate(today.getDate() + 1);
+        today = today.toISOString().substr(0, 10);
+        weatherData.timeSeries.forEach(timelyData => {
+          if (timelyData.validTime.substr(0, 10) === today) {
+            todaysData.push(timelyData);
+          }
+        });
+      }
+
       todaysData[0].parameters.forEach(parameter => {
         if (parameter.name == "t") {
           currentTemperature = parameter.values[0];
@@ -74,12 +79,10 @@ class Utils {
       let weeklyData = [];
       let weeklyInformation = [];
 
-      console.log(weatherData);
       weatherData.timeSeries.forEach(timelyData => {
         if (!!weeklyData[timelyData.validTime.substr(0, 10)]) {
           timelyData.parameters.forEach(parameter => {
             if (parameter.name === "t") {
-              //     weeklyData[timelyData.validTime.substr(0, 10)] = { high: parameter.values[0], low: parameter.values[0] };
               if (
                 weeklyData[timelyData.validTime.substr(0, 10)].high <
                 parameter.values[0]
@@ -107,10 +110,8 @@ class Utils {
           });
         }
       });
-      console.log("weeklyData");
-      console.log(weeklyData);
-      let dates = Object.keys(weeklyData);
 
+      let dates = Object.keys(weeklyData);
       dates.forEach(date => {
         weeklyInformation.push({
           date: date,

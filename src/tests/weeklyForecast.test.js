@@ -5,8 +5,8 @@ import WeeklyForecast from "../components/weeklyForecast";
 it("renders without crashing", () => {
   const div = document.createElement("div");
   const weeklyData = [
-    { date: "2018-09-12", high: 0, low: 0 },
-    { date: "2018-09-13", high: 18.2, low: 0 },
+    { date: "2018-09-12", high: 12.3, low: 12 },
+    { date: "2018-09-13", high: 18.2, low: 14.4 },
     { date: "2018-09-14", high: 16.5, low: 10.6 },
     { date: "2018-09-15", high: 14.6, low: 11.8 },
     { date: "2018-09-16", high: 16, low: 10.3 },
