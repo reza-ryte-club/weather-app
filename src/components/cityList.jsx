@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../stylesheets/weather.css";
 
+// This component renders the name of the suggested cities.
+// The props isActive suggests necessary css changes.
 class CityList extends Component {
   state = {};
   render() {

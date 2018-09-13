@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import "../stylesheets/weather.css";
 
+// This component renders the name of the selected city
+// and the current weather of the city.
+// The props city and temperature corresponds them.
+
 class currentTemperature extends Component {
   state = {
     cel: null,

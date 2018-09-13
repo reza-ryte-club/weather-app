@@ -62,6 +62,7 @@ class WeatherForm extends Component {
     );
   }
 
+  // This method monitors keyboard movement of the user
   navigateMenu = e => {
     const { cursor, cities } = this.state;
     let currentState = this;
@@ -85,28 +86,42 @@ class WeatherForm extends Component {
     }
   };
 
+  // Check weather data of the selected city
   checkWeather = city => {
     this.setState({ city: "" });
-    this.setState({ selectedCity: city });
-    this.setState({ cities: [] });
+    this.setState({
+      selectedCity: city
+    });
+    this.setState({
+      cities: []
+    });
     let currentState = this;
+
+    // This promise will return the geographical coordinates of selected city.
     Utils.getGeoCode(city).then(function(geocode) {
       geocode.lat = geocode.lat.toPrecision(4);
       geocode.lng = geocode.lng.toPrecision(4);
-      currentState.setState({ currentGeocode: geocode }, () => {
-        Utils.getWeatherData(currentState.state.currentGeocode)
-          .then(function(weatherData) {
-            currentState.getCurrentWeather(weatherData);
-          })
-          .catch(e => {
-            alert(
-              "Please check your internet connection and proxy settings in Package.json file."
-            );
-          });
-      });
+      currentState.setState(
+        {
+          currentGeocode: geocode
+        },
+        () => {
+          // This promise will return weather data of selected city.
+          Utils.getWeatherData(currentState.state.currentGeocode)
+            .then(function(weatherData) {
+              currentState.getCurrentWeather(weatherData);
+            })
+            .catch(e => {
+              alert(
+                "Please check your internet connection and proxy settings in Package.json file."
+              );
+            });
+        }
+      );
     });
   };
 
+  // Get weekly forecast from SMHI API and update the state
   getWeeklyForecast = weatherdata => {
     let currentState = this;
     Utils.getWeeklyData(weatherdata).then(function(weeklyData) {
@@ -114,6 +129,7 @@ class WeatherForm extends Component {
     });
   };
 
+  // Get current weather situation
   getCurrentWeather = weatherData => {
     let currentState = this;
     Utils.getCurrentTemperature(weatherData).then(function(currentTemperature) {
@@ -122,6 +138,7 @@ class WeatherForm extends Component {
     });
   };
 
+  // Handle keyboard events
   inputChange = e => {
     this.setState({ city: e.target.value }, () => {
       let currentCity = this.state.city;
@@ -145,7 +162,8 @@ class WeatherForm extends Component {
               name: prediction.structured_formatting.main_text
             })
           );
-          currentState.updateCities(result);
+
+          currentState.setState({ cities: result });
         })
         .catch(function(error) {
           alert(
@@ -154,10 +172,6 @@ class WeatherForm extends Component {
         });
     });
   };
-
-  updateCities(newCities) {
-    this.setState({ cities: newCities });
-  }
 }
 
 export default WeatherForm;
