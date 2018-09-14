@@ -18,7 +18,7 @@ class LastYearsWeather extends Component {
                     100) /
                   parseFloat(this.props.currentData)
                 ).toPrecision(2)}
-                % colder than last year ({this.props.historicData}
+                % cooler than last year ({this.props.historicData}
                 &deg;C)
               </span>
             ) : (

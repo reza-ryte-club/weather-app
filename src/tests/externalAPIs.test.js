@@ -6,7 +6,10 @@ import axios from "axios";
 test("google place API get geo code :: latitude test", () => {
   const coordinateStockholm = { lat: 59.32932349999999, lng: 18.0685808 };
   return axios
-    .get("https://maps.googleapis.com/maps/api/geocode/json?&address=Stockholm")
+    .get(
+      "https://maps.googleapis.com/maps/api/geocode/json?&address=Stockholm&key=" +
+        process.env.REACT_APP_GOOGLE_API_KEY
+    )
     .then(data => {
       const result = data.data.results[0].geometry.location.lat.toString();
       expect(result).toMatch(coordinateStockholm.lat.toString());
@@ -18,7 +21,10 @@ test("google place API get geo code :: latitude test", () => {
 test("google place API get geo code :: longitude test", () => {
   const coordinateStockholm = { lat: 59.32932349999999, lng: 18.0685808 };
   return axios
-    .get("https://maps.googleapis.com/maps/api/geocode/json?&address=Stockholm")
+    .get(
+      "https://maps.googleapis.com/maps/api/geocode/json?&address=Stockholm&key=" +
+        process.env.REACT_APP_GOOGLE_API_KEY
+    )
     .then(data => {
       const result = data.data.results[0].geometry.location.lng.toString();
       expect(result).toMatch(coordinateStockholm.lng.toString());

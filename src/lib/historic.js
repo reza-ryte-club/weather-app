@@ -2,6 +2,10 @@ import abiskoData from "../data/188800.json";
 import stockholmData from "../data/98210.json";
 import göteborgData from "../data/71420.json";
 
+/*
+For Göteborg
+https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/71420/period/corrected-archive/data.csv
+*/
 class Historic {
   static getLastYearsData = city => {
     // let dataKeys = Object.keys(abisko);
@@ -30,28 +34,24 @@ class Historic {
       });
     });
 
-    todaysWeather.length;
-
     let lowestIndex = 0;
     let currentIndex = 0;
     let lowestDiff = 12;
     todaysWeather.forEach(hourlyData => {
-      if (parseInt(hour) > parseInt(hourlyData.hour)) {
-        if (parseInt(hour) - parseInt(hourlyData.hour) < lowestDiff) {
-          lowestDiff = parseInt(hour) - parseInt(hourlyData.hour);
+      if (parseInt(hour, 10) > parseInt(hourlyData.hour, 10)) {
+        if (parseInt(hour, 10) - parseInt(hourlyData.hour, 10) < lowestDiff) {
+          lowestDiff = parseInt(hour, 10) - parseInt(hourlyData.hour, 10);
           lowestIndex = currentIndex;
         }
       } else {
-        if (parseInt(hourlyData.hour) - parseInt(hour) < lowestDiff) {
-          lowestDiff = parseInt(hourlyData.hour) - parseInt(hour);
+        if (parseInt(hourlyData.hour, 10) - parseInt(hour, 10) < lowestDiff) {
+          lowestDiff = parseInt(hourlyData.hour, 10) - parseInt(hour, 10);
           lowestIndex = currentIndex;
         }
       }
 
       currentIndex += 1;
     });
-    todaysWeather[lowestIndex];
-    // debugger;
     return todaysWeather[lowestIndex];
   };
 
