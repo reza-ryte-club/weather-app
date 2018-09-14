@@ -21,7 +21,7 @@ The purpose of this app to get weather data of Swedish cities. To simplify the o
 
 This application is developed on top of create-react-app, which is an implementation of webpack, babel and react on top node js. As it is a front-end application, the queries to the external server(for example: Google Places API) was managed using proxy attribute to the package.json file. Doing that helped me to avoid CORS error.
 
-The UI components are resided in the components directory. A lib directory contains non UI methods in Utils class. All the test cases were put into the classes inside of tests directory. All the promises is handled using native promise. But for retrieving API data, Axios was used.
+The UI components are resided in the components directory. A lib directory contains non UI methods in Utils class. The Historic class corresponds to check and search previous weather data. All the test cases were put into the classes inside of tests directory. All the promises is handled using native promise. But for retrieving API data, Axios was used.
 
 The API key has to be in the .env file. For security reasons, it isn't included in the repository. To run the application successfully, it is required to add a .env file in the root directory. The content would be like this 
 
