@@ -1,4 +1,5 @@
 import axios from "axios";
+import Historic from "./historic";
 class Utils {
   // Get longitude and latitude of a city
   static getGeoCode = cityName => {
@@ -47,6 +48,9 @@ class Utils {
     });
   };
 
+  static getLastYearsData = city => {
+    console.log(Historic.getLastYearsData());
+  };
   // Retrieve the current temperature
   static getCurrentTemperature = weatherData => {
     return new Promise((resolve, reject) => {

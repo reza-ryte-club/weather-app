@@ -5,6 +5,8 @@ import axios from "axios";
 import CityList from "./cityList";
 import CurrentTemperature from "./currentTemperature";
 import WeeklyForecast from "./weeklyForecast";
+import Historic from "../lib/historic";
+import LastYearsWeather from "./lastYearsWeather";
 
 class WeatherForm extends Component {
   state = {
@@ -14,7 +16,8 @@ class WeatherForm extends Component {
     currentTemperature: null,
     weeklyForcast: null,
     selectedCity: null,
-    cursor: 0
+    cursor: 0,
+    lastYearsCurrentTemperature: null
   };
 
   render() {
@@ -52,6 +55,10 @@ class WeatherForm extends Component {
               <CurrentTemperature
                 temperature={this.state.currentTemperature}
                 city={this.state.selectedCity}
+              />
+              <LastYearsWeather
+                historicData={this.state.lastYearsCurrentTemperature}
+                currentData={this.state.currentTemperature}
               />
 
               <WeeklyForecast weeklyData={this.state.weeklyForcast} />
@@ -126,6 +133,12 @@ class WeatherForm extends Component {
     let currentState = this;
     Utils.getWeeklyData(weatherdata).then(function(weeklyData) {
       currentState.setState({ weeklyForcast: weeklyData });
+      currentState.setState({
+        lastYearsCurrentTemperature: Historic.getLastYearsData(
+          currentState.state.selectedCity
+        ).temperature
+      });
+      console.log(currentState);
     });
   };
 
