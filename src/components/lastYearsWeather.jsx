@@ -13,9 +13,10 @@ class LastYearsWeather extends Component {
               <span className="weather-city">
                 ⬇
                 {(
-                  (parseFloat(this.props.historicData) -
-                    parseFloat(this.props.currentData)) /
-                  100.0
+                  ((parseFloat(this.props.historicData) -
+                    parseFloat(this.props.currentData)) *
+                    100) /
+                  parseFloat(this.props.currentData)
                 ).toPrecision(2)}
                 % colder than last year ({this.props.historicData}
                 &deg;C)
@@ -24,8 +25,10 @@ class LastYearsWeather extends Component {
               <span className="weather-city">
                 ⬆{" "}
                 {(
-                  (this.props.currentData - this.props.historicData) /
-                  100.0
+                  ((parseFloat(this.props.currentData) -
+                    parseFloat(this.props.historicData)) *
+                    100) /
+                  parseFloat(this.props.currentData)
                 ).toPrecision(2)}
                 % warmer than the last year ({this.props.historicData}
                 &deg;C)
