@@ -26,7 +26,7 @@ class WeatherForm extends Component {
         <div className="container">
           <div className="row" id="appSummary">
             <div className="col">
-              <h1 className="col text-center app-header">Weather App</h1>
+              <h1 className="col text-center app-header display-4">Weather App</h1>
               <p className="lead app-subtitle">Get latest weather condition</p>
               <label htmlFor="states-autocomplete">Choose a Swedish city</label>
               <input
